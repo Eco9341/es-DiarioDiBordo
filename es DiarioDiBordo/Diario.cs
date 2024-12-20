@@ -33,21 +33,6 @@ namespace es_DiarioDiBordo
                 $"--------------------------------";
         }
 
-        public static List<DiarioEntry> CercaPerPeriodo(List<DiarioEntry> dati, Date inizio, Date fine)
-        {
-            // Filtra i dati in base al periodo specificato
-            return dati.Where(entry => entry.Data >= inizio && entry.Data <= fine).ToString();
-        }
-
-        public string Descrizione { get; set; } = string.Empty;   
-
-
-        public override string ToString()
-        { 
-            return base.ToString() +
-                $"Data: {Data}, CordinataX: {CordinataX}, CordinataY: {CordinataY}, Luogo: {Luogo}, Descrizione: {Descrizione}";
-        }
-
     }
 
 }
