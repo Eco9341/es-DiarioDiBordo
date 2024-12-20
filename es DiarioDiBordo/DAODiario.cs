@@ -194,40 +194,7 @@ namespace es_DiarioDiBordo
             return risultati;
         }
 
-        public List<Diario> SearchByDescriptionKeyword()
-        {
-            // Creiamo una lista di Diario per restituire i record
-            List<Diario> records = new List<Diario>();
-
-            // Chiediamo all'utente di inserire una parola chiave per la ricerca nella descrizione
-            Console.WriteLine("Inserisci una parola chiave da cercare nella descrizione: ");
-            string keyword = Console.ReadLine()?.Trim();  // Prendiamo la parola chiave e la rimuoviamo dagli spazi iniziali e finali
-
-            if (string.IsNullOrEmpty(keyword))
-            {
-                Console.WriteLine("La parola chiave non può essere vuota.");
-                return records; // Se la parola chiave è vuota, restituiamo una lista vuota
-            }
-
-            // Creiamo la query SQL per cercare la parola chiave nella descrizione
-            // Utilizziamo 'LIKE' per trovare descrizioni che contengono la parola chiave
-            string query = $"SELECT * FROM {tableName} WHERE Descrizione LIKE '%{keyword}%'";
-
-            // Eseguiamo la lettura dei dati dal database
-            List<Dictionary<string, string>>? result = db.ReadDb(query);
-
-            if (result != null)
-            {
-                foreach (var line in result)
-                {
-                    Diario record = new Diario();
-                    record.TypeSort(line); // Metodo che mappa il risultato della query agli attributi dell'oggetto Diario
-                    records.Add(record);
-                }
-            }
-
-            return records;
-        }
+        
 
 
 
