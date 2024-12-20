@@ -12,9 +12,9 @@ namespace es_DiarioDiBordo
     {
         public DateTime Data { get; set; }
 
-        public float CordinataX { get; set; }
+        public double CordinataX { get; set; }
 
-        public float CordinataY { get; set; }
+        public double CordinataY { get; set; }
 
         public string Luogo { get; set; } = string.Empty;
 
@@ -25,13 +25,16 @@ namespace es_DiarioDiBordo
         public override string ToString()
         {
             return base.ToString() +
-                $"Data: {Data}\n" +
+                $"Data: {Data.ToString("yyyy-MM-dd")}\n" +
                 $"CordinataX: {CordinataX}\n" +
                 $"CordinataY: {CordinataY}\n" +
                 $"Luogo: {Luogo}\n" +
                 $"Descrizione: {Descrizione}\n" +
                 $"--------------------------------";
         }
+
+        
+        
 
     }
 
