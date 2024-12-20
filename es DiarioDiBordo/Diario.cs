@@ -3,44 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using _04_Utility;
+using utility;
 
 namespace es_DiarioDiBordo
 {
+
     internal class Diario : Entity
     {
         public DateTime Data { get; set; }
 
-        public float CordinataX { get; set; }
+        public double CordinataX { get; set; }
 
-        public float CordinataY { get; set; }
+        public double CordinataY { get; set; }
 
-        public string Luogo {  get; set; }
-
-        public string Descrizione { get; set; }
+        public string Luogo { get; set; } = string.Empty;
 
 
-        public Diario(int id, DateTime data, float cordinataX, float cordinataY, string luogo, string descrizione)
-            : base(id)
-        {
-            Data = data;
-            CordinataX = cordinataX;
-            CordinataY = cordinataY;
-            Luogo = luogo;
-            Descrizione = descrizione;
-        }
+        public string Descrizione { get; set; } = string.Empty;
+
+
 
         public static List<DiarioEntry> CercaPerPeriodo(List<DiarioEntry> dati, Date inizio, Date fine)
         {
             // Filtra i dati in base al periodo specificato
             return dati.Where(entry => entry.Data >= inizio && entry.Data <= fine).ToString();
+
+        public override string ToString()
+        {
+            return base.ToString() +
+                $"Data: {Data.ToString("yyyy-MM-dd")}\n" +
+                $"CordinataX: {CordinataX}\n" +
+                $"CordinataY: {CordinataY}\n" +
+                $"Luogo: {Luogo}\n" +
+                $"Descrizione: {Descrizione}\n" +
+                $"--------------------------------";
+
         }
 
-
+        
         
 
-
-
-
     }
+
 }
