@@ -3,86 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using _04_Utility;
+using utility;
 
 namespace es_DiarioDiBordo
 {
     internal class DAODiario : IDAO
     {
-        private IDatabase db;
-
-        public DAODiario()
+        private readonly Database db;
+        private readonly string tableName = "Diario";
+        private DAODiario()
         {
             db = new Database("DiarioDiBordo");
         }
-        private static DAODiario instance = null;
-
+        private static DAODiario? instance = null;
         public static DAODiario GetInstance()
         {
-            if (instance == null)
-                instance = new DAODiario();
-            return instance;
+            return instance ??= new DAODiario();
         }
-
-        public bool CreateRecord(Entity e)
+        public List<Entity> GetRecords()
         {
-            return db.Update($"INSERT INTO Diario (Data, CordinataX, CordinataY, Luogo, Descrizione) " +
-                 $"VALUES" +
-                 $"('{((Diario)e).Data:yyyy-MM-dd}', " +
-                 $"{((Diario)e).CordinataX}, " +
-                 $"{((Diario)e).CordinataY}, " +
-                 $"'{((Diario)e).Luogo}', " +
-                 $"'{((Diario)e).Descrizione}');");
-        }
-
-        public List<Entity> FindRecord()    
-        {
-            List<Entity> ris = new();
-
-            List<Dictionary<string, string>> righe = db.ReadDb("SELECT * FROM Diario;");
-
-            foreach (Dictionary<string, string> riga in righe)
+            List<Entity> records = [];
+            List<Dictionary<string, string>>? result = db.ReadDb($"SELECT * FROM {tableName}");
+            if (result != null)
             {
-                Entity e = new Diario();
-
-                e.FromDictionary(riga);
-
-                ris.Add(e);
+                foreach (var line in result)
+                {
+                    Diario record = new();
+                    record.TypeSort(line);
+                    records.Add(record);
+                }
             }
-
-            return ris;
+            return records;
         }
 
-        public bool UpdateRecord(Entity e)
+        public bool CreateRecord(Entity entity)
         {
-            return db.UpdateDb($"UPDATE Prodotti SET " +
-                             $"Data = '{((Diario)e).Data:yyyy-MM-dd}', " +
-                             $"CordinataX = {((Diario)e).CordinataX}, " +
-                             $"CordinataY = {((Diario)e).CordinataY}, " +
-                             $"Luogo = '{((Diario)e).Luogo}', " +
-                             $"Descrizione = '{((Diario)e).Descrizione}' " +
-                             $"WHERE id = {((Diario)e).Id};");
+            DateTime date = ((Diario)entity).Data;
+            float cordinataX = ((Diario)entity).CordinataX;
+            float cordinataY = ((Diario)entity).CordinataY;
+            string luogo = ((Diario)entity).Luogo;
+            string descrizione = ((Diario)entity).Descrizione;
+            return db.UpdateDb($"INSERT INTO {tableName} (Data, CordinataX, CordinataY, Luogo, Descrizione) VALUES ('{date}', '{cordinataX}', '{cordinataY}', '{luogo}', '{descrizione}')");
         }
 
-        public bool DeleteRecord(int id)
+
+        public bool UpdateRecord(Entity entity)
         {
-            return db.UpdateDb($"DELETE FROM Diario WHERE id = {id};");
+            int id = entity.Id;
+            DateTime date = ((Diario)entity).Data;
+            float cordinataX = ((Diario)entity).CordinataX;
+            float cordinataY = ((Diario)entity).CordinataY;
+            string luogo = ((Diario)entity).Luogo;
+            string descrizione = ((Diario)entity).Descrizione;
+            return db.UpdateDb($"UPDATE {tableName} SET Data = '{date}', CordinataX = '{cordinataX}', CordinataY = '{cordinataY}', Luogo = '{luogo}', Descrizione = '{descrizione}' WHERE Id = {id}");
         }
 
-        public Entity FindRecord(int id)
+        public bool DeleteRecord(int recordId)
         {
-            var riga = db.ReadOneDb($"SELECT * FROM Diario WHERE id = {id}");
+            return db.UpdateDb($"DELETE FROM {tableName} WHERE id = {recordId};");
+        }
 
-            if (riga != null)
+        public Entity? FindRecord(int recordId)
+        {
+            Dictionary<string, string>? result = db.ReadDb($"SELECT * FROM {tableName} WHERE id = {recordId}").FirstOrDefault();
+            if (result != null)
             {
-                Entity e = new Diario();
-                e.FromDictionary(riga);
-
-                return e;
+                Diario record = new();
+                record.TypeSort(result);
+                return record;
             }
-            else
-                return null;
+            return null;
         }
+
     }
 
 }

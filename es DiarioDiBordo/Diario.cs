@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using _04_Utility;
+using utility;
 
 namespace es_DiarioDiBordo
 {
@@ -17,6 +17,7 @@ namespace es_DiarioDiBordo
         public float CordinataY { get; set; }
 
         public string Luogo { get; set; } = string.Empty;
+
 
         public string Descrizione { get; set; } = string.Empty;
 
@@ -36,6 +37,15 @@ namespace es_DiarioDiBordo
         {
             // Filtra i dati in base al periodo specificato
             return dati.Where(entry => entry.Data >= inizio && entry.Data <= fine).ToString();
+        }
+
+        public string Descrizione { get; set; } = string.Empty;   
+
+
+        public override string ToString()
+        { 
+            return base.ToString() +
+                $"Data: {Data}, CordinataX: {CordinataX}, CordinataY: {CordinataY}, Luogo: {Luogo}, Descrizione: {Descrizione}";
         }
 
     }
