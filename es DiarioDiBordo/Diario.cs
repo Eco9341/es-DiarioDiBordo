@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using _04_Utility;
+using utility;
 
 namespace es_DiarioDiBordo
 {
@@ -15,31 +15,15 @@ namespace es_DiarioDiBordo
 
         public float CordinataY { get; set; }
 
-        public string Luogo {  get; set; }
+        public string Luogo { get; set; } = string.Empty;
 
-        public string Descrizione { get; set; }
+        public string Descrizione { get; set; } = string.Empty;   
 
 
-        public Diario(int id, DateTime data, float cordinataX, float cordinataY, string luogo, string descrizione)
-            : base(id)
-        {
-            Data = data;
-            CordinataX = cordinataX;
-            CordinataY = cordinataY;
-            Luogo = luogo;
-            Descrizione = descrizione;
+        public override string ToString()
+        { 
+            return base.ToString() +
+                $"Data: {Data}, CordinataX: {CordinataX}, CordinataY: {CordinataY}, Luogo: {Luogo}, Descrizione: {Descrizione}";
         }
-
-        public string ToString()
-        {
-            return "Data: " + Data + " CordinataX: " + CordinataX + " CordinataY: " + CordinataY + " Luogo: " + Luogo + " Descrizione: " + Descrizione;
-        }
-
-
-        
-
-
-
-
     }
 }
