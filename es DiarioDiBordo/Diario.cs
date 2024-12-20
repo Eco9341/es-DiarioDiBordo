@@ -30,9 +30,10 @@ namespace es_DiarioDiBordo
             Descrizione = descrizione;
         }
 
-        public string ToString()
+        public static List<DiarioEntry> CercaPerPeriodo(List<DiarioEntry> dati, Date inizio, Date fine)
         {
-            return "Data: " + Data + " CordinataX: " + CordinataX + " CordinataY: " + CordinataY + " Luogo: " + Luogo + " Descrizione: " + Descrizione;
+            // Filtra i dati in base al periodo specificato
+            return dati.Where(entry => entry.Data >= inizio && entry.Data <= fine).ToString();
         }
 
 
