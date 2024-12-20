@@ -36,8 +36,17 @@ namespace es_DiarioDiBordo
         }
 
 
-        
+        /*
+            Ricerca in base a un periodo di tempo (Esempio: tra 01-01-2019 e 01-01-2020)
+            Ricerca in base al luogo
+            Ricerca in base a una parte della descrizione
+        */
 
+        public static List<DiarioEntry> CercaPerPeriodo(List<DiarioEntry> dati, DateTime inizio, DateTime fine)
+        {
+            // Filtra i dati in base al periodo specificato
+            return dati.Where(entry => entry.Data >= inizio && entry.Data <= fine).ToString();
+        }
 
 
 
